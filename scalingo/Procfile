@@ -1,1 +1,0 @@
-web: java -jar ./zio-microservice-seed.jar --port 8080
