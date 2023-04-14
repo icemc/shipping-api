@@ -97,7 +97,7 @@ lazy val assemblySettings = Seq(
   assembly / assemblyJarName := applicationName + ".jar",
   assembly / assemblyMergeStrategy := {
     case PathList("META-INF", ps @ _*) =>
-      if (ps.map(_.toLowerCase).exists(a => a.contains("swagger-ui") || a.contains("log4j")))
+      if (ps.map(_.toLowerCase).exists(a => a.contains("swagger-ui") || a.contains("logback")))
         MergeStrategy.singleOrError
       else MergeStrategy.discard
     case x if x.endsWith("module-info.class") => MergeStrategy.discard

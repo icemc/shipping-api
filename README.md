@@ -13,14 +13,13 @@
 ## How to run the jar file 
 - run `java -jar ./modules/application/target/scala-2.13/zio-microservice-seed.jar` and open the browser at [http://localhost:8080/docs](http://localhost:8080/docs)
 
-## Deploy to scalingo
-- Build the jar file using the command specified above
-- There is already a procfile defined in the root of this project. It will be needed by scalingo to determine the jar location. Do not change it's content
-- Make sure you have the scalingo commandline installed
-- Note I am assuming your scalingo app is called `zio-microservice-seed` else change that with you scalingo app name in every command below
-- run `scalingo --app zio-microservice-seed env-set BUILDPACK_URL="https://github.com/Scalingo/buildpack-jvm-common"` to specify you are using java
-- run `scalingo --app zio-microservice-seed env-set JAVA_VERSION=17.0.5` to specify you want to use java 17 as required by the app
-- run `scalingo --app zio-microservice-seed deploy`
+## Deploy to [Render](https://dashboard.render.com/register)
+- Create a Git repository on Github for the project
+- Create an account on [Render](https://dashboard.render.com/register). Link your Render account to your Github account.
+- Build the jar file using the command specified above. Then copy the jar file from [./modules/application/target/scala-2.13/zio-microservice-seed.jar](./modules/application/target/scala-2.13/zio-microservice-seed.jar) to [./dist/zio-microservice-seed.jar](./build/zio-microservice-seed.jar)
+- Push it to your git repository
+- Create a new web service on Render and select the repository
+- Add an environment variable called PORT with value 8080.
 
 ## Description
 This is a seed template for scala microservice applications. This should serve as a base template for most if not all scala microservice applications at hiis. It made up of the following main components
