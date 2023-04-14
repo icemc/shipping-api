@@ -58,7 +58,6 @@ tramp
 
 # cask packages
 .cask/
-dist/
 
 # Flycheck
 flycheck_*.el
@@ -305,7 +304,6 @@ fabric.properties
 nbproject/private/
 build/
 nbbuild/
-dist/
 nbdist/
 .nb-gradle/
 # Built application files
@@ -417,7 +415,6 @@ buildNumber.properties
 # Simple Build Tool
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
 
-dist/*
 target/
 lib_managed/
 src_managed/
