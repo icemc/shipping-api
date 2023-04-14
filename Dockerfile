@@ -2,20 +2,23 @@
 
 FROM openjdk:17-alpine
 
-RUN mkdir -p /root/zio-microservice/
+ARG SBT_VERSION=1.7.2
 
 # Update Alpine Linux Package Manager and Install the bash
 RUN apk update && apk add bash
 
-ADD dist/zio-microservice-seed.jar /root/zio-microservice/zio-microservice-seed.jar
+RUN \
+  apk add --no-cache --virtual=.build-dependencies bash curl bc ca-certificates && \
+  cd "/tmp" && \
+  update-ca-certificates && \
+  curl -fsL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar xfz - -C /usr/local && \
+  $(mv /usr/local/sbt-launcher-packaging-$SBT_VERSION /usr/local/sbt || true) && \
+  ln -s /usr/local/sbt/bin/* /usr/local/bin/ && \
+  apk del .build-dependencies && \
+  rm -rf "/tmp/"*
 
-
-WORKDIR /root/zio-microservice
-
-RUN echo '#!/bin/ash' >> /root/zio-microservice/run.sh
-RUN echo 'java -jar /root/zio-microservice/zio-microservice-seed.jar' >> /root/zio-microservice/run.sh
-RUN chmod a+x /root/zio-microservice/run.sh
-
+WORKDIR /app
 EXPOSE 8080
+COPY . /app
 
-CMD [ "/root/zio-microservice/run.sh" ]
+CMD [ "sbt", "run", "-Dsbt.rootdir=true"]
