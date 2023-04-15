@@ -45,7 +45,8 @@ object ApiGateway {
       ShipmentController(shipmentService)(authTokenService),
       SigninController(userService, passwordService, authTokenService),
       SignupController(userService, passwordService),
-      UserController(userService)(authTokenService)
+      UserController(userService)(authTokenService),
+      HealthController
     )
   )
 }
