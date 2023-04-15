@@ -5,8 +5,7 @@ import io.circe.generic.auto.{ exportDecoder, exportEncoder }
 import io.circe.syntax.EncoderOps
 import io.hiis.service.application.api.utils.Api.ApiError.{
   forbidden,
-  Forbidden,
-  InternalServerError
+  Forbidden
 }
 import io.hiis.service.application.api.utils.Controller
 import io.hiis.service.application.models.Credentials

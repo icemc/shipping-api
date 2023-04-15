@@ -1,23 +1,23 @@
 import Dependencies.Libraries._
 
-ThisBuild / scalaVersion := "2.13.8"
-ThisBuild / organization := "io.hiis"
+ThisBuild / scalaVersion     := "2.13.8"
+ThisBuild / organization     := "io.hiis"
 ThisBuild / organizationName := "hiis"
 
-val applicationName = "zio-microservice-seed"
+val applicationName    = "zio-microservice-seed"
 val applicationVersion = "0.0.1"
-val dockerUser = "hiis"
+val dockerUser         = "hiis"
 
 lazy val root = project
   .in(file("."))
   .settings(
     commonSettings,
     dockerSettings,
-    name := applicationName,
-    version := applicationVersion,
+    name               := applicationName,
+    version            := applicationVersion,
     evictionErrorLevel := Level.Warn,
-    semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
+    semanticdbEnabled  := true,
+    semanticdbVersion  := scalafixSemanticdb.revision
   )
   .enablePlugins(DockerPlugin, ScalaUnidocPlugin)
   .disablePlugins(sbtassembly.AssemblyPlugin)
@@ -96,17 +96,17 @@ lazy val compilerOptions = Seq(
 lazy val assemblySettings = Seq(
   assembly / assemblyJarName := applicationName + ".jar",
   assembly / assemblyMergeStrategy := {
-    case PathList("META-INF", ps@_*) =>
+    case PathList("META-INF", ps @ _*) =>
       ps map {
         _.toLowerCase
       } match {
         case "services" :: xs =>
           MergeStrategy.filterDistinctLines
         case value if value.exists(a => a.contains("swagger-ui")) => MergeStrategy.singleOrError
-        case _ => MergeStrategy.discard
+        case _                                                    => MergeStrategy.discard
       }
     case x if x.endsWith("module-info.class") => MergeStrategy.discard
-    case _ => MergeStrategy.first
+    case _                                    => MergeStrategy.first
   }
 )
 
@@ -125,13 +125,13 @@ lazy val docs = project
   .in(file("zio-microservice-docs"))
   .settings(
     publish / skip := true,
-    moduleName := "docs",
+    moduleName     := "docs",
     scalacOptions -= "-Yno-imports",
     scalacOptions -= "-Xfatal-warnings",
     ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(core, application),
     ScalaUnidoc / unidoc / target := (LocalRootProject / baseDirectory).value / "website" / "static" / "api",
     cleanFiles += (ScalaUnidoc / unidoc / target).value,
-    docusaurusCreateSite := docusaurusCreateSite.dependsOn(Compile / unidoc).value,
+    docusaurusCreateSite     := docusaurusCreateSite.dependsOn(Compile / unidoc).value,
     docusaurusPublishGhpages := docusaurusPublishGhpages.dependsOn(Compile / unidoc).value
   )
   .dependsOn(application)
