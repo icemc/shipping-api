@@ -37,8 +37,12 @@ COPY . /root
 WORKDIR /root
 
 RUN \
-  sbt compile -Dsbt.rootdir=true -batch sbtVersion
+  sbt build -Dsbt.rootdir=true
+
+RUN echo '#!/bin/ash' >> /root/run.sh
+RUN echo 'java -jar /root/modules/application/target/scala-2.13/zio-microservice-seed.jar' >> /root/run.sh
+RUN chmod a+x /root/run.sh
 
 EXPOSE 8080
 
-CMD [ "sbt", "run", "-Dsbt.rootdir=true"]
+CMD [ "/root/run.sh" ]
