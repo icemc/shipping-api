@@ -1,1 +1,0 @@
-web: java -jar ./modules/application/target/scala-2.13/zio-microservice-seed.jar --port 8080
